@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
-				"type": "GetMetadata",
+				"name": "Azure Function1",
+				"type": "AzureFunctionActivity",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -13,136 +13,9 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "ds_raw",
-						"type": "DatasetReference"
-					},
-					"fieldList": [
-						"childItems"
-					],
-					"storeSettings": {
-						"type": "AzureBlobFSReadSettings",
-						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
-					}
-				}
-			},
-			{
-				"name": "initialize Queue",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Get Metadata1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "Queue",
-					"value": {
-						"value": "@activity('Get Metadata1').output.childItems",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "ForEach1",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "initialize Queue",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@variables('Queue')",
-						"type": "Expression"
-					},
-					"isSequential": true,
-					"activities": [
-						{
-							"name": "If Condition1",
-							"type": "IfCondition",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"expression": {
-									"value": "@equals(item().type,'folder')",
-									"type": "Expression"
-								},
-								"ifTrueActivities": [
-									{
-										"name": "Append variable1",
-										"type": "AppendVariable",
-										"dependsOn": [
-											{
-												"activity": "Get Metadata2",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
-										"userProperties": [],
-										"typeProperties": {
-											"variableName": "Queue_FileNames",
-											"value": {
-												"value": "@item().name",
-												"type": "Expression"
-											}
-										}
-									},
-									{
-										"name": "Get Metadata2",
-										"type": "GetMetadata",
-										"dependsOn": [],
-										"policy": {
-											"timeout": "0.12:00:00",
-											"retry": 0,
-											"retryIntervalInSeconds": 30,
-											"secureOutput": false,
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"dataset": {
-												"referenceName": "ds_raw_qualifying",
-												"type": "DatasetReference"
-											},
-											"fieldList": [],
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
-										}
-									}
-								]
-							}
-						}
-					]
-				}
+				"userProperties": []
 			}
 		],
-		"variables": {
-			"Queue": {
-				"type": "Array"
-			},
-			"Queue_FileNames": {
-				"type": "Array"
-			}
-		},
 		"annotations": []
 	}
 }

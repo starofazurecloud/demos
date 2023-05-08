@@ -1,0 +1,10 @@
+{
+	"name": "ls_storageforallrun",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://stgforallrun.dfs.core.windows.net/"
+		}
+	}
+}

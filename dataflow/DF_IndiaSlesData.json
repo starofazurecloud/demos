@@ -1,0 +1,77 @@
+{
+	"name": "DF_IndiaSlesData",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds1_IndiaSales_csv",
+						"type": "DatasetReference"
+					},
+					"name": "IndiaSales"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds1_Output_IndiaSales_csv",
+						"type": "DatasetReference"
+					},
+					"name": "IndiaSalesValidData"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds1_Output_IndiaSales_csv",
+						"type": "DatasetReference"
+					},
+					"name": "IndiaSalesInvalidData"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SplitInvalidRows"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          saleDate as string,",
+				"          saleItem as string,",
+				"          country as string,",
+				"          quantity as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> IndiaSales",
+				"IndiaSales split(!isDate(saleDate, 'dd-MMM-yyyy'),",
+				"     disjoint: false) ~> SplitInvalidRows@(Invalid, Valid)",
+				"SplitInvalidRows@Invalid sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          saleDate,",
+				"          saleItem,",
+				"          country,",
+				"          quantity",
+				"     )) ~> IndiaSalesValidData",
+				"SplitInvalidRows@Valid sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          saleDate,",
+				"          saleItem,",
+				"          country,",
+				"          quantity",
+				"     )) ~> IndiaSalesInvalidData"
+			]
+		}
+	}
+}

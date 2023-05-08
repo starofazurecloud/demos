@@ -18,14 +18,14 @@
 						"referenceName": "ds1_Output_IndiaSales_csv",
 						"type": "DatasetReference"
 					},
-					"name": "IndiaSalesValidData"
+					"name": "IndiaSalesInValidData"
 				},
 				{
 					"dataset": {
 						"referenceName": "ds1_Output_IndiaSales_csv",
 						"type": "DatasetReference"
 					},
-					"name": "IndiaSalesInvalidData"
+					"name": "IndiaSalesValidData"
 				}
 			],
 			"transformations": [
@@ -57,7 +57,7 @@
 				"          saleItem,",
 				"          country,",
 				"          quantity",
-				"     )) ~> IndiaSalesValidData",
+				"     )) ~> IndiaSalesInValidData",
 				"SplitInvalidRows@Valid sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     umask: 0022,",
@@ -70,7 +70,7 @@
 				"          saleItem,",
 				"          country,",
 				"          quantity",
-				"     )) ~> IndiaSalesInvalidData"
+				"     )) ~> IndiaSalesValidData"
 			]
 		}
 	}

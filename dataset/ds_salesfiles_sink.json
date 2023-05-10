@@ -1,0 +1,23 @@
+{
+	"name": "ds_salesfiles_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_storageforallrun",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "GlobalSales/SalesOutput",
+				"fileSystem": "adf"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

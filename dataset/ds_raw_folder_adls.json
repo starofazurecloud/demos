@@ -1,0 +1,22 @@
+{
+	"name": "ds_raw_folder_adls",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_storageforallrun",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "2021",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

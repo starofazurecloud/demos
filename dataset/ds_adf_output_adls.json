@@ -1,12 +1,12 @@
 {
-	"name": "ds_raw_folder_adls",
+	"name": "ds_adf_output_adls",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_storageforallrun",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"paramYyear": {
+			"paramTgtFolder": {
 				"type": "string"
 			}
 		},
@@ -16,10 +16,10 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": {
-					"value": "@dataset().paramYyear",
+					"value": "output/@{dataset().paramTgtFolder}",
 					"type": "Expression"
 				},
-				"fileSystem": "raw"
+				"fileSystem": "adf"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -1,12 +1,15 @@
 {
-	"name": "ds_raw_folder_adls",
+	"name": "ds_adf_files_adls",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_storageforallrun",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"paramYyear": {
+			"paramFilename": {
+				"type": "string"
+			},
+			"paramYear": {
 				"type": "string"
 			}
 		},
@@ -15,8 +18,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().paramFilename",
+					"type": "Expression"
+				},
 				"folderPath": {
-					"value": "@dataset().paramYyear",
+					"value": "@dataset().paramYear",
 					"type": "Expression"
 				},
 				"fileSystem": "raw"

@@ -8,6 +8,9 @@
 		"parameters": {
 			"file_name": {
 				"type": "string"
+			},
+			"paramYear": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -19,7 +22,10 @@
 					"value": "@dataset().file_name",
 					"type": "Expression"
 				},
-				"folderPath": "2021",
+				"folderPath": {
+					"value": "@dataset().paramYear",
+					"type": "Expression"
+				},
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",

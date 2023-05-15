@@ -17,7 +17,13 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "ds_raw_folder_adls",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"paramYyear": {
+								"value": "@pipeline().parameters.plParamYear",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"childItems"
@@ -74,6 +80,10 @@
 										"file_name": {
 											"value": "@item().name",
 											"type": "Expression"
+										},
+										"paramYear": {
+											"value": "@pipeline().parameters.plParamYear",
+											"type": "Expression"
 										}
 									}
 								},
@@ -89,6 +99,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"plParamYear": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

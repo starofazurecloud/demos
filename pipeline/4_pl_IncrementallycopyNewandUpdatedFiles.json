@@ -1,0 +1,85 @@
+{
+	"name": "4_pl_IncrementallycopyNewandUpdatedFiles",
+	"properties": {
+		"description": "This Pipeline Will Copy New and Modified Files from last 24 hrs or 1 day .",
+		"activities": [
+			{
+				"name": "Copy New and Updated Files",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"modifiedDatetimeStart": {
+								"value": "@adddays(utcnow(),-2)",
+								"type": "Expression"
+							},
+							"modifiedDatetimeEnd": {
+								"value": "@utcnow()",
+								"type": "Expression"
+							},
+							"wildcardFileName": "*.pdf",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_raw_folder_adls",
+						"type": "DatasetReference",
+						"parameters": {
+							"paramYyear": "2022"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adf_output_adls",
+						"type": "DatasetReference",
+						"parameters": {
+							"paramTgtFolder": {
+								"value": "@formatDateTime(utcnow(),'yyyyMMdd')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

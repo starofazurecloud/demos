@@ -1,29 +1,21 @@
 {
-	"name": "ds_adf_output_adls",
+	"name": "ds_raw_adls",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_storageforallrun",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"paramTgtFolder": {
-				"type": "string"
-			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": {
-					"value": "output/@{dataset().paramTgtFolder}",
-					"type": "Expression"
-				},
-				"fileSystem": "adf"
+				"fileName": "BlankFileToBeUsedAsTempalte.txt",
+				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
+			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
 		"schema": []

@@ -1,0 +1,59 @@
+{
+	"name": "FixedLengthDataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_raw_samplefixedfile",
+						"type": "DatasetReference"
+					},
+					"name": "SampleFixedLength"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_adf_output_adls",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Column_1 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> SampleFixedLength",
+				"select1 derive(column1 = substring(inputColumn, 0, 6),",
+				"          column2 = substring(inputColumn, 7, 2),",
+				"          column3 = substring(inputColumn, 11, 10),",
+				"          column4 = substring(inputColumn, 23, 10)) ~> derivedColumn1",
+				"SampleFixedLength select(mapColumn(",
+				"          inputColumn = Column_1",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

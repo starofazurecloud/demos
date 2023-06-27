@@ -1,0 +1,9 @@
+{
+	"name": "adf-demo-for-all",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true"
+		}
+	},
+	"location": "centralindia"
+}

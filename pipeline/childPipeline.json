@@ -1,6 +1,7 @@
 {
 	"name": "childPipeline",
 	"properties": {
+		"description": "This Pipeline to be executed from azure-synapse using web activity",
 		"activities": [
 			{
 				"name": "Wait1",

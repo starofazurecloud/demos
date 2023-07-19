@@ -1,0 +1,22 @@
+{
+	"name": "childPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			}
+		],
+		"variables": {
+			"var1": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
